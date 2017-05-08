@@ -1,15 +1,30 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var cadmin_ad_count = sequelize.define('cadmin_ad_count', {
-    view: DataTypes.INTEGER,
-    click: DataTypes.INTEGER,
-    install: DataTypes.INTEGER
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
-  return cadmin_ad_count;
+
+module.exports = (sequelize, DataTypes) => {
+
+    const cadmin_ad_count = sequelize.define('cadmin_ad_count', {
+
+        view : {
+            type : DataTypes.INTEGER,
+            allowNull : false,
+        },
+        click : {
+            type : DataTypes.INTEGER,
+            allowNull : false,
+        },
+        install : {
+            type : DataTypes.INTEGER,
+            allowNull : false,
+        }
+    }, {
+        classMethods: {
+            associate: (models) => {
+                cadmin_ad_count.belongTo(models.cadmin_ad, {
+                    foreignKey : 'ad_id',
+                    onDelete : 'CASCADE'.
+                });
+            },
+        },
+    });
+    return cadmin_ad_count;
 };

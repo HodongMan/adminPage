@@ -1,15 +1,30 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var cadmin_user = sequelize.define('cadmin_user', {
-    email: DataTypes.STRING,
-    name: DataTypes.STRING,
-    password: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
-  return cadmin_user;
+
+module.exports = (sequelize, DataTypes) => {
+
+    const cadmin_user = sequelize.define('cadmin_user', {
+
+        email : {
+            type : DataTypes.STRING,
+            allowNull : false,
+        },
+        name : {
+            type : DataTypes.STRING,
+            allowNull : false,
+        },
+        password : {
+            type : DataTypes.STRING,
+            allowNull : false,
+        }
+    }, {
+        classMethods: {
+            associate: (models) => {
+                cadmin_user.hasMany(models.cadmin_ad, {
+                    foreignKey : 'user_email',
+                    as : 'cadmin_ads',
+                })
+            },
+        },
+    });
+    return cadmin_user;
 };

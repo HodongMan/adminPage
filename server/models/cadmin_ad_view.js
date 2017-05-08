@@ -1,13 +1,20 @@
 'use strict';
-module.exports = function(sequelize, DataTypes) {
-  var cadmin_ad_view = sequelize.define('cadmin_ad_view', {
-    user_code: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
-  return cadmin_ad_view;
+
+module.exports = (sequelize, DataTypes) => {
+    const cadmin_ad_view = sequelize.define('cadmin_ad_view', {
+        user_code : {
+            type : DataTypes.STRING,
+            allowNull : false,
+        }
+    }, {
+        classMethods: {
+            associate: (models) => {
+                cadmin_ad_target.belongTo(models.cadmin_ad, {
+                    foreignKey : 'ad_id',
+                    onDelete : 'CASCADE'.
+                });
+            },
+        },
+    });
+    return cadmin_ad_view;
 };
