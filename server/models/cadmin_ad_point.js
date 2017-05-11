@@ -27,9 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         classMethods: {
             associate: (models) => {
-                cadmin_ad.belongTo(models.cadmin_ad, {
+                cadmin_ad_point.belongsTo(models.cadmin_ad, {
                     foreignKey : 'ad_id',
-                    onDelete : 'CASCADE'.
+                    onDelete : 'CASCADE',
                 });
             },
         },

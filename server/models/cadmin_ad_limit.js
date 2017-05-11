@@ -13,15 +13,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false,
         },
         time : {
-            type : DataTypes.INTEGER,
+            type : DataTypes.STRING,
             allowNull : false,
         },
     }, {
         classMethods: {
             associate: (models) => {
-                cadmin_ad_limit.belongTo(models.cadmin_ad, {
+                cadmin_ad_limit.belongsTo(models.cadmin_ad, {
                     foreignKey : 'ad_id',
-                    onDelete : 'CASCADE'.
+                    onDelete : 'CASCADE',
                 });
             },
         },

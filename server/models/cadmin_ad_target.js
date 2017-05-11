@@ -23,12 +23,12 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: (models) => {
-                cadmin_ad_target.belongTo(models.cadmin_ad, {
+                cadmin_ad_target.belongsTo(models.cadmin_ad, {
                     foreignKey : 'ad_id',
-                    onDelete : 'CASCADE'.
+                    onDelete : 'CASCADE',
                 });
-            }
-        }
+            },
+        },
     });
     return cadmin_ad_target;
 };

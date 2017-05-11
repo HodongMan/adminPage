@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
     up : (queryInterface, Sequelize) => {
         return queryInterface.createTable('cadmin_ad_views', {
@@ -12,6 +13,10 @@ module.exports = {
             user_code: {
                 allowNull : false,
                 type: Sequelize.STRING
+            },
+            count: {
+                allowNull : false,
+                type: Sequelize.INTEGER
             },
             createdAt: {
                 allowNull: false,

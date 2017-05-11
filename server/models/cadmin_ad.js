@@ -1,20 +1,21 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
+
     const cadmin_ad = sequelize.define('cadmin_ad', {
 
         weight : {
-            type : DataTypes.String,
+            type : DataTypes.INTEGER,
             allowNull : false,
-        }
+        },
         open : {
-            type : DataTypes.String,
+            type : DataTypes.INTEGER,
             allowNull : false,
         }
     }, {
         classMethods: {
             associate: (models) => {
-                cadmin_ad.belongTo(models.cadmin_user. {
+                cadmin_ad.belongsTo(models.cadmin_user, {
                     foreignKey : 'user_email',
                     onDelete : 'CASCADE',
                 });

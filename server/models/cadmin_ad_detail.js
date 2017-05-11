@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false,
         },
         content : {
-            type : DataTypes.STRING,
+            type : DataTypes.TEXT,
             allowNull : false,
         },
         img : {
@@ -23,21 +23,21 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false,
         },
         weight : {
-            type : DataTypes.STRING,
+            type : DataTypes.INTEGER,
             allowNull : false,
         },
         start_date : {
-            type : DataTypes.STRING,
+            type : DataTypes.DATE,
             allowNull : true,
         },
         end_date : {
-            type : DataTypes.STRING,
+            type : DataTypes.DATE,
             allowNull : true,
         },
     }, {
         classMethods: {
             associate: (models) => {
-                cadmin_ad_detail.belongTo(models.cadmin_ad, {
+                cadmin_ad_detail.belongsTo(models.cadmin_ad, {
                     foreignKey : 'ad_id',
                     onDelete : 'CASCADE',
                 });
