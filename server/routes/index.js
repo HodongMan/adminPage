@@ -42,9 +42,16 @@ module.exports = (app) => {
     app.put("/api/ad/detail/:id", cadmin_ad_detail_controller.update);
 
     /* AD Limit URLs */
+    app.get("/api/ad/limit/:ad_id", cadmin_ad_limit_controller.retrieve);
+    app.post("/api/ad/limit/:ad_id", cadmin_ad_limit_controller.create);
+    app.put("/api/ad/limit/:id", cadmin_ad_limit_controller.update);
+
+    /* AD Limit URLs */
     app.get("/api/ad/point/:ad_id", cadmin_ad_point_controller.retrieve);
     app.post("/api/ad/point/:ad_id", cadmin_ad_point_controller.create);
     app.put("/api/ad/point/:id", cadmin_ad_point_controller.update);
+
+
 
     /* AD Target URLs */
     app.get("/api/ad/target/:ad_id", cadmin_ad_target_controller.retrieve);
