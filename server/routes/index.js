@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const cadmin_ad_controller = require("../controllers").cadmin_ad;
 const cadmin_user_controller = require("../controllers").cadmin_user;
@@ -17,6 +17,8 @@ module.exports = (app) => {
     });
 
     /* User URLs*/
+
+    app.post("/api/user/login", cadmin_user_controller.login);
 
     app.get("/api/user/:email", cadmin_user_controller.retrieve);
     app.get("/api/user/list/:email", cadmin_user_controller.list);

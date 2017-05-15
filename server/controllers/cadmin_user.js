@@ -1,9 +1,34 @@
 'use strict';
 
+const crypto = require('crypto');
+
 const cadmin_user = require("../models").cadmin_user;
 const cadmin_ad = require("../models").cadmin_ad;
 
+
 module.exports = {
+
+    login(req, res){
+
+        let login_user = Object.assign({}, req.body);
+
+        return cadmin_user
+        .findOne({
+            where : {
+                email : login_user.email,
+            },
+        })
+        .then((user) => {
+
+            if(!user){
+                res.status(404).send({
+                    message : "User Not Found",
+                });
+            }
+            res.status(201).send(user)
+        })
+        .catch(error => res.status(400).send(error));
+    },
 
     create(req, res){
 
@@ -13,6 +38,7 @@ module.exports = {
         .create(new_user)
         .then(user => res.status(201).send(user))
         .catch(error => res.status(400).send(error));
+
     },
 
     list(req, res){
