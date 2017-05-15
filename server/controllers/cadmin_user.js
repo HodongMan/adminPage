@@ -28,7 +28,10 @@ module.exports = {
 
 
             if(user.authenticate(login_user.password)){
-                res.status(200).send(user);
+                res.status(200).send({
+                    email : user.email,
+                    name : user.name,
+                });
             }else{
                 res.status(404).send({
                     message : "User Invalid Password",
@@ -45,7 +48,10 @@ module.exports = {
 
         return cadmin_user
         .create(new_user)
-        .then(user => res.status(201).send(user))
+        .then(user => res.status(201).send({
+            email : user.email,
+            name : user.name,
+        }))
         .catch(error => res.status(400).send(error));
 
     },
