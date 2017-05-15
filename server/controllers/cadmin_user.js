@@ -25,7 +25,16 @@ module.exports = {
                     message : "User Not Found",
                 });
             }
-            res.status(201).send(user)
+
+
+            if(user.authenticate(login_user.password)){
+                res.status(200).send(user);
+            }else{
+                res.status(404).send({
+                    message : "User Invalid Password",
+                });
+            }
+
         })
         .catch(error => res.status(400).send(error));
     },

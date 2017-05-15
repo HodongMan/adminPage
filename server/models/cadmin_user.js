@@ -98,26 +98,45 @@ module.exports = (sequelize, DataTypes) => {
                     }
                 });
             },
-        },
+            authenticate(password, callback) {
 
-        authenticate(password, callback) {
-
-            if (!callback) {
-                return this.password === this.encryptPassword(password);
-            }
-
-            this.encryptPassword(password, (err, pwdGen) => {
-                if (err) {
-                    return callback(err);
+                if (!callback) {
+                    return this.password === this.encryptPassword(password);
                 }
 
-                if (this.password === pwdGen) {
-                    callback(null, true);
-                } else {
-                    callback(null, false);
-                }
-            });
+                this.encryptPassword(password, (err, pwdGen) => {
+                    if (err) {
+                        return callback(err);
+                    }
+
+                    if (this.password === pwdGen) {
+                        callback(null, true);
+                    } else {
+                        callback(null, false);
+                    }
+                });
+            },
         },
+        hooks : {
+            beforeCreate : (member, options, fn) => {
+
+                member.makeSalt((saltErr, salt) => {
+
+                    if(saltErr){
+                        return fn(saltErr);
+                    }
+                    member.salt = salt;
+                    member.encryptPassword(member.password, (encryptErr, hashedPassword) => {
+                        if(encryptErr){
+                            return fn(encryptErr);
+                        }
+                        member.password = hashedPassword;
+                        fn();
+                    });
+                });
+            },
+        },
+
     });
 
     return cadmin_user;
