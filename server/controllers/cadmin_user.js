@@ -26,7 +26,6 @@ module.exports = {
                 });
             }
 
-
             if(user.authenticate(login_user.password)){
                 res.status(200).send({
                     email : user.email,
