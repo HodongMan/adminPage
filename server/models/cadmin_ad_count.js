@@ -26,5 +26,5 @@ module.exports = (sequelize, DataTypes) => {
             },
         },
     });
-    return cadmin_ad_count;
+    return cadmin_ad_count;cd
 };

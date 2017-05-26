@@ -23,6 +23,27 @@ module.exports = (sequelize, DataTypes) => {
             allowNull : false,
         },
     }, {
+        hooks : {
+            beforeCreate : (member, options, fn) => {
+                console.log(member);
+                member.makeSalt((saltErr, salt) => {
+                    console.log(member);
+                    if(saltErr){
+                        return fn(saltErr);
+                    }
+
+                    member.salt = salt;
+                    member.encryptPassword(member.password, (encryptErr, hashedPassword) => {
+                        console.log(hashedPassword);
+                        if(encryptErr){
+                            return fn(encryptErr);
+                        }
+                        member.password = hashedPassword;
+                        fn();
+                    });
+                });
+            },
+        },
         classMethods: {
             associate: (models) => {
                 cadmin_user.hasMany(models.cadmin_ad, {
@@ -117,26 +138,6 @@ module.exports = (sequelize, DataTypes) => {
                 });
             },
         },
-        hooks : {
-            beforeCreate : (member, options, fn) => {
-
-                member.makeSalt((saltErr, salt) => {
-
-                    if(saltErr){
-                        return fn(saltErr);
-                    }
-                    member.salt = salt;
-                    member.encryptPassword(member.password, (encryptErr, hashedPassword) => {
-                        if(encryptErr){
-                            return fn(encryptErr);
-                        }
-                        member.password = hashedPassword;
-                        fn();
-                    });
-                });
-            },
-        },
-
     });
 
     return cadmin_user;

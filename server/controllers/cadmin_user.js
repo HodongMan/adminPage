@@ -1,7 +1,6 @@
 'use strict';
 
-const crypto = require('crypto');
-
+const jwt = require("jsonwebtoken");
 const cadmin_user = require("../models").cadmin_user;
 const cadmin_ad = require("../models").cadmin_ad;
 
@@ -21,18 +20,20 @@ module.exports = {
         .then((user) => {
 
             if(!user){
-                res.status(404).send({
+                return res.status(404).send({
                     message : "User Not Found",
                 });
             }
 
             if(user.authenticate(login_user.password)){
-                res.status(200).send({
-                    email : user.email,
-                    name : user.name,
+                let token = jwt.sign({email : user.email, name : user.name}, 'hodong', {
+                    expiresIn : 60 * 60 * 5
                 });
+                return res.status(202).json({
+                    token,
+                })
             }else{
-                res.status(404).send({
+                return res.status(404).send({
                     message : "User Invalid Password",
                 });
             }
@@ -43,14 +44,26 @@ module.exports = {
 
     create(req, res){
 
-        let new_user = Object.assign({}, req.body);
+        let new_user = Object.assign({salt : "temp"}, req.body);
 
         return cadmin_user
         .create(new_user)
-        .then(user => res.status(201).send({
-            email : user.email,
-            name : user.name,
-        }))
+        .then((user) => {
+
+            if(!user){
+                return res.status(404).send({
+                    message : "User Not Found",
+                });
+            }
+
+            let token = jwt.sign({email : user.email, name : user.name}, 'hodong', {
+                expiresIn : 60 * 60 * 5
+            });
+            return res.status(202).json({
+                token,
+            })
+
+        })
         .catch(error => res.status(400).send(error));
 
     },
