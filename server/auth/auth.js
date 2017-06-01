@@ -1,9 +1,10 @@
 
-import config from '../config/config';
-import jwt from 'jsonwebtoken';
-import expressJwt from 'express-jwt';
-import compose from 'composable-middleware';
-import User from '../models/cadmin_user';
+const config = require('../config/config');
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
+const compose = require('composable-middleware')
+const User = require("../models/cadmin_user");
+
 
 const validateJwt = expressJwt({
   secret : 'hodong', //config.secrets.session
@@ -13,7 +14,7 @@ const validateJwt = expressJwt({
  * Attaches the user object to the request if authenticated
  * Otherwise returns 403
  */
-export function isAuthenticated() {
+function isAuthenticated() {
   return compose()
     // Validate jwt
     .use(function(req, res, next) {
@@ -35,4 +36,8 @@ export function isAuthenticated() {
         })
         .catch(err => next(err));
     });
+}
+
+module.exports = {
+    isAuthenticated,
 }
