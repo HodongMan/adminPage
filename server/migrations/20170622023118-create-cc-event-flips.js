@@ -14,11 +14,11 @@ module.exports = {
             },
             start_date: {
                 type: Sequelize.DATE,
-                allowNull : false,
+                defaultValue : '1992-06-13',
             },
             end_date: {
                 type: Sequelize.DATE,
-                allowNull : false,
+                defaultValue : '1992-06-13',
             },
             point: {
                 type: Sequelize.INTEGER,

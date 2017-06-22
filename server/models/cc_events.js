@@ -14,8 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         classMethods : {
             associate : (models) => {
-
-                cc_events.hasOne(models.cc_event_flips, {
+                cc_events.hasMany(models.cc_event_flips, {
                     foreignKey : 'event_id',
                     onDelete : 'CASCADE',
                 });

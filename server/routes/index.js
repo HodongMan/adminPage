@@ -70,10 +70,12 @@ module.exports = (app) => {
 
     /* EVENTS URLs */
     app.get("/api/event", cc_events_controller.list);
+    app.get("/api/event/flip/:user_code", cc_events_controller.flipRetrieve)
     app.post("/api/event", cc_events_controller.create);
+
 
     /* EVENTS FLIPS */
 
     app.get("/api/event/flip", cc_event_flips_controller.list);
-    app.post("/api/event/flip", cc_event_flips_controller.create);
+    app.post("/api/event/flip/:event_id", cc_event_flips_controller.create);
 }
