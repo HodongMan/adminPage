@@ -8,6 +8,8 @@ const cadmin_ad_limit_controller = require("../controllers").cadmin_ad_limit;
 const cadmin_ad_point_controller = require("../controllers").cadmin_ad_point;
 const cadmin_ad_target_controller = require("../controllers").cadmin_ad_target;
 const cadmin_ad_view_controller = require("../controllers").cadmin_ad_view;
+const cc_events_controller = require("../controllers").cc_events;
+const cc_event_flips_controller = require("../controllers").cc_event_flips;
 
 module.exports = (app) => {
     app.get("/api", (req, res) => {
@@ -64,4 +66,14 @@ module.exports = (app) => {
     app.get("/api/ad/view/:ad_id", cadmin_ad_view_controller.retrieve);
     app.post("/api/ad/view/:ad_id", cadmin_ad_view_controller.create);
     app.put("/api/ad/view/:id", cadmin_ad_view_controller.update);
+
+
+    /* EVENTS URLs */
+    app.get("/api/event", cc_events_controller.list);
+    app.post("/api/event", cc_events_controller.create);
+
+    /* EVENTS FLIPS */
+
+    app.get("/api/event/flip", cc_event_flips_controller.list);
+    app.post("/api/event/flip", cc_event_flips_controller.create);
 }
